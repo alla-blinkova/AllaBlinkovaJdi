@@ -1,47 +1,48 @@
 package entities;
 
+import enums.Colors;
+import enums.Elements;
+import enums.Metals;
+import enums.Vegetables;
+
 import java.util.List;
 
 public class MetalsColorsData {
 
-    private List<String> summary;
-    private String odd;
-    private String even;
-    private List<String> elements;
-    private String color;
-    private String metals;
-    private List<String> vegetables;
+    private List<Integer> summary;
+    private Integer odd;
+    private Integer even;
+    private List<Elements> elements;
+    private Colors color;
+    private Metals metals;
+    private List<Vegetables> vegetables;
 
     public void parseSummary() {
-        this.odd = summary.isEmpty() ? "" : summary.get(0);
-        this.even = summary.size() > 1 ? summary.get(1) : "";
+        this.odd = summary.get(0);
+        this.even = summary.get(1);
     }
 
-    public List<String> getElements() {
+    public List<Elements> getElements() {
         return elements;
     }
 
-    public String getOdd() {
+    public Integer getOdd() {
         return odd;
     }
 
-    public String getEven() {
+    public Integer getEven() {
         return even;
     }
 
-    public List<String> getSummary() {
-        return summary;
-    }
-
-    public String getColor() {
+    public Colors getColor() {
         return color;
     }
 
-    public String getMetal() {
+    public Metals getMetal() {
         return metals;
     }
 
-    public List<String> getVegetables() {
+    public List<Vegetables> getVegetables() {
         return vegetables;
     }
 

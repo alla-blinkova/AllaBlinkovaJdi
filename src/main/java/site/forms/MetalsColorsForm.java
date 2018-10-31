@@ -8,10 +8,16 @@ import com.epam.jdi.uitests.web.selenium.elements.complex.RadioButtons;
 import com.epam.jdi.uitests.web.selenium.elements.composite.Form;
 import com.epam.jdi.uitests.web.selenium.elements.pageobjects.annotations.objects.JDropdown;
 import entities.MetalsColorsData;
+import enums.Colors;
+import enums.Elements;
+import enums.Metals;
+import enums.Vegetables;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
+
+import static enums.Vegetables.*;
 
 public class MetalsColorsForm extends Form<MetalsColorsData> {
 
@@ -22,16 +28,16 @@ public class MetalsColorsForm extends Form<MetalsColorsData> {
     public RadioButtons even;
 
     @FindBy(css = "#elements-checklist p")
-    public CheckList elements;
+    public CheckList<Elements> elements;
 
     @JDropdown(
             root = @FindBy(css = ".colors"),
             list = @FindBy(tagName = "li"),
             value = @FindBy(css = ".filter-option")
     )
-    public Dropdown color;
+    public Dropdown<Colors> color;
 
-    public ComboBox metals = new ComboBox(
+    public ComboBox<Metals> metals = new ComboBox<>(
             By.cssSelector(".metals .caret"),
             By.cssSelector(".metals li span"),
             By.cssSelector(".metals input")
@@ -39,9 +45,10 @@ public class MetalsColorsForm extends Form<MetalsColorsData> {
 
     @JDropdown(
             root = @FindBy(css = "#salad-dropdown"),
-            list = @FindBy(tagName = "li")
+            list = @FindBy(tagName = "li"),
+            value = @FindBy(tagName = "button")
     )
-    public Dropdown vegetables;
+    public Dropdown<Vegetables> vegetables;
 
     @FindBy(css = "#submit-button")
     public Button submit;
@@ -56,15 +63,23 @@ public class MetalsColorsForm extends Form<MetalsColorsData> {
         submit.click();
     }
 
-    private void fillElements(List<String> elements) {
-        elements.forEach(x -> this.elements.select(x));
+    private void fillElements(List<Elements> elements) {
+        elements.forEach(x -> {
+            if (x != null) {
+                this.elements.select(x);
+            }
+        });
     }
 
-    private void fillVegetables(List<String> vegetables) {
-        vegetables.forEach(x -> this.vegetables.select(x));
+    private void fillVegetables(List<Vegetables> vegetables) {
+        vegetables.forEach(x -> {
+            if (x != null) {
+                this.vegetables.select(x);
+            }
+        });
     }
 
     private void clearVegetables() {
-        vegetables.select("Vegetables");
+        vegetables.select(VEGETABLES);
     }
 }

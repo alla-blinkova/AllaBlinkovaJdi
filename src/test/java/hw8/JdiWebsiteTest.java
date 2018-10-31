@@ -1,29 +1,17 @@
 package hw8;
 
-import com.epam.jdi.uitests.web.selenium.elements.composite.WebSite;
-import com.epam.jdi.uitests.web.testng.testRunner.TestNGBase;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import entities.MetalsColorsData;
 import entities.User;
 import org.testng.annotations.*;
 import site.JdiSite;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 
-public class JdiWebsiteTest extends TestNGBase {
+import static utils.MetalsColorsUtils.parseJson;
 
-    //выносить в init
-    @SuppressWarnings("unchecked")
-    @BeforeSuite(alwaysRun = true)
-    public void beforeSuite() {
-        WebSite.init(JdiSite.class);
-    }
+public class JdiWebsiteTest extends JdiWebsiteTestInit {
 
-    @DataProvider
+    @DataProvider()
     public Object[][] metalsColorsProvider() throws FileNotFoundException {
 
         return new Object[][]{
@@ -31,13 +19,13 @@ public class JdiWebsiteTest extends TestNGBase {
                 {parseJson(2)},
                 {parseJson(3)},
                 {parseJson(4)},
-                {parseJson(5)},
-                {parseJson(6)}
+                {parseJson(5)}
         };
     }
 
     @BeforeClass(alwaysRun = true)
     public void beforeClass() {
+        //1 Login on JDI site as User
         JdiSite.homePage.open();
         JdiSite.login(User.PETER);
     }
@@ -55,16 +43,6 @@ public class JdiWebsiteTest extends TestNGBase {
         //5 Result sections should contains data  below:
         JdiSite.metalsColorsPage.checkResults(metalsColorsData);
 
-    }
-
-    //выносить в utils
-    private MetalsColorsData parseJson(int dataNum) throws FileNotFoundException {
-
-        JsonReader reader = new JsonReader(new FileReader("src\\test\\resources\\JDI_ex8_metalsColorsDataSet.json"));
-        JsonObject jsonObject = new JsonParser().parse(reader).getAsJsonObject();
-
-        Gson gson = new Gson();
-        return gson.fromJson(jsonObject.get("data_" + dataNum), MetalsColorsData.class);
     }
 
 }
