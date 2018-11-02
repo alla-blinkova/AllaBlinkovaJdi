@@ -17,7 +17,7 @@ import org.openqa.selenium.support.FindBy;
 
 import java.util.List;
 
-import static enums.Vegetables.*;
+import static enums.Vegetables.VEGETABLES;
 
 public class MetalsColorsForm extends Form<MetalsColorsData> {
 
@@ -64,19 +64,11 @@ public class MetalsColorsForm extends Form<MetalsColorsData> {
     }
 
     private void fillElements(List<Elements> elements) {
-        elements.forEach(x -> {
-            if (x != null) {
-                this.elements.select(x);
-            }
-        });
+        elements.forEach(x -> this.elements.select(x));
     }
 
     private void fillVegetables(List<Vegetables> vegetables) {
-        vegetables.forEach(x -> {
-            if (x != null) {
-                this.vegetables.select(x);
-            }
-        });
+        vegetables.forEach(x -> this.vegetables.select(x));
     }
 
     private void clearVegetables() {

@@ -2,7 +2,9 @@ package hw8;
 
 import entities.MetalsColorsData;
 import entities.User;
-import org.testng.annotations.*;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import site.JdiSite;
 
 import java.io.FileNotFoundException;
@@ -14,13 +16,9 @@ public class JdiWebsiteTest extends JdiWebsiteTestInit {
     @DataProvider()
     public Object[][] metalsColorsProvider() throws FileNotFoundException {
 
-        return new Object[][]{
-                {parseJson(1)},
-                {parseJson(2)},
-                {parseJson(3)},
-                {parseJson(4)},
-                {parseJson(5)}
-        };
+        return parseJson().values().stream()
+                .map(metalsColors -> new Object[]{metalsColors})
+                .toArray(Object[][]::new);
     }
 
     @BeforeClass(alwaysRun = true)
